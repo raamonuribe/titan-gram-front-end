@@ -1,0 +1,138 @@
+import React, { Fragment, useState } from 'react';
+import axios from 'axios';
+
+const Register = () => {
+   const [formData, setFormData] = useState({
+      firstName: '',
+      lastName: '',
+      username: '',
+      email: '',
+      password: '',
+      confirmPassword: ''
+   });
+
+   const {
+      firstName,
+      lastName,
+      username,
+      email,
+      password,
+      confirmPassword
+   } = formData;
+
+   const onChange = (e) =>
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+
+   const onSubmit = async (e) => {
+      e.preventDefault();
+
+      if (password !== confirmPassword) {
+         console.log('Passwords do not match');
+      } else {
+         const newUser = {
+            firstName,
+            lastName,
+            username,
+            email,
+            password
+         };
+
+         try {
+            const config = {
+               headers: {
+                  'Content-Type': 'application/json'
+               }
+            };
+            const body = JSON.stringify(newUser);
+            const res = await axios.post(
+               'http://localhost:8080/api/v1/users',
+               body,
+               config
+            );
+            console.log(res.data);
+         } catch (error) {
+            console.log(error);
+         }
+      }
+   };
+
+   return (
+      <Fragment>
+         <h1 className='large text-primary'>Sign Up</h1>
+         <p className='lead'>
+            <i className='fas fa-user'></i> Create Your Account
+         </p>
+         <form className='form' onSubmit={(e) => onSubmit(e)}>
+            <div className='form-group'>
+               <input
+                  type='text'
+                  placeholder='First Name'
+                  value={firstName}
+                  onChange={(e) => onChange(e)}
+                  name='firstName'
+                  required
+               />
+            </div>
+            <div className='form-group'>
+               <input
+                  type='text'
+                  placeholder='Last Name'
+                  value={lastName}
+                  onChange={(e) => onChange(e)}
+                  name='lastName'
+                  required
+               />
+            </div>
+            <div className='form-group'>
+               <input
+                  type='text'
+                  placeholder='Username'
+                  value={username}
+                  onChange={(e) => onChange(e)}
+                  name='username'
+                  required
+               />
+            </div>
+            <div className='form-group'>
+               <input
+                  type='email'
+                  value={email}
+                  onChange={(e) => onChange(e)}
+                  placeholder='Email Address'
+                  name='email'
+               />
+               <small className='form-text'>
+                  This site uses Gravatar so if you want a profile image, use a
+                  Gravatar email
+               </small>
+            </div>
+            <div className='form-group'>
+               <input
+                  type='password'
+                  value={password}
+                  onChange={(e) => onChange(e)}
+                  placeholder='Password'
+                  name='password'
+                  minLength='6'
+               />
+            </div>
+            <div className='form-group'>
+               <input
+                  type='password'
+                  value={confirmPassword}
+                  onChange={(e) => onChange(e)}
+                  placeholder='Confirm Password'
+                  name='confirmPassword'
+                  minLength='6'
+               />
+            </div>
+            <input type='submit' className='btn btn-primary' value='Register' />
+         </form>
+         <p className='my-1'>
+            Already have an account? <a href='login.html'>Sign In</a>
+         </p>
+      </Fragment>
+   );
+};
+
+export default Register;
