@@ -8,7 +8,7 @@ const Landing = () => {
             <div className='landing-inner'>
                <h1 className='x-large'>Titan Gram</h1>
                <p className='lead'>
-                  Share posts and share the love of anime with other users
+                  Share posts and the love of anime with other users
                </p>
                <div className='buttons'>
                   <Link to='/register' className='btn btn-primary'>
