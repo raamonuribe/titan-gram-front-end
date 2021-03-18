@@ -1,4 +1,4 @@
-# Scrapped Project
+# Project on Hiatus
 
 # Getting Started with Create React App
 
